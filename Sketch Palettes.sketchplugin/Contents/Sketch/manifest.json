@@ -28,13 +28,21 @@
 			"shortcut": "",
 			"script": "sketchPalettes.js",
 			"handler": "savePalette"
+		},
+		{
+			"name": "Create Palette...",
+			"identifier": "createPalette",
+			"shortcut": "",
+			"script": "sketchPalettes.js",
+			"handler": "createPalette"
 		}
 	],
 	"menu": {
 		"items": [
 			"loadPalette",
 			"clearPalette",
-			"savePalette"
+			"savePalette",
+			"createPalette"
 		]
 	}
 }

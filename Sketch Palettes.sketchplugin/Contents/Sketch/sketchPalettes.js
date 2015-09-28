@@ -1,4 +1,26 @@
 
+// TODO: Figure out a better way to do this function
+function generateColors(context,palette) {
+
+	var doc = context.document;
+
+	// Convert hex strings into MSColors
+	var mspalette = [];
+	for (var i = 0; i < palette.length; i++) {
+		mspalette.push(MSColor.colorWithSVGString(palette[i]));
+	};
+
+	// Convert array into MSArray
+	var documentColors = MSArray.dataArrayWithArray(mspalette);
+
+	// Load colors into Sketch Document Colors
+	doc.documentData().assets().setPrimitiveColors(documentColors);
+}
+
+
+// ------------------------------------------------------------------------------------------------------------------------
+
+
 function loadPalette(context) {
 	
 	var doc = context.document;
@@ -19,17 +41,8 @@ function loadPalette(context) {
 	var fileContents = NSString.stringWithContentsOfFile(filePath);
 	var palette = JSON.parse(fileContents.toString()).colors;
 	
-	// Convert hex strings into MSColors
-	var mspalette = [];
-	for (var i = 0; i < palette.length; i++) {
-		mspalette.push(MSColor.colorWithSVGString(palette[i]));
-	};
-	
-	// Convert array into MSArray
-	var documentColors = MSArray.dataArrayWithArray(mspalette);
-	
-	// Load colors into Sketch Document Colors
-	doc.documentData().assets().setPrimitiveColors(documentColors);
+	generateColors(context,palette)
+
 }
 
 
@@ -98,5 +111,21 @@ function clearPalette(context) {
 	var doc = context.document;
 	doc.documentData().assets().setPrimitiveColors(MSArray.dataArrayWithArray([]));
 	
+}
+
+
+// ------------------------------------------------------------------------------------------------------------------------
+
+
+function createPalette(context) {
+
+	var doc = context.document;
+	var hexCodeList = [doc askForUserInput:"Enter a list of hex codes (comma seperated):" initialValue:""];
+
+	var palette = new Array();
+		palette = hexCodeList.split(",");
+
+	generateColors(context,palette);
+
 }
 
